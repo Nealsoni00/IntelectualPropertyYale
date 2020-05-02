@@ -3,7 +3,7 @@ from cookie import *
 from bs4 import BeautifulSoup, NavigableString, Tag
 import csv
 import time
-
+import re
 
 def requestPage(type, search):
 	url = "https://github.com/search"
@@ -43,8 +43,23 @@ def processPage(type, soup):
 		if "type="+type in option['href']:
 			if option.find("span"):
 				size = option.find("span").contents[0]
-				print(type, size)
+				print(type, size.replace(',','').replace('K','000').replace('M','000000'))
 
+	rightSide = pjax_container.find("div", {"class": "codesearch-results"})
+
+	topText = rightSide.find("span", {"class":"v-align-middle"})
+	if topText and topText.contents:
+		strippedstring = topText.contents[0].strip().replace(',','').replace('K','000').replace('M','000000')
+		num = re.findall("\d+",strippedstring)
+		if (num and num[0]):
+			print(type, num[0])
+
+	topText = rightSide.find("h3")
+	if topText and topText.contents:
+		strippedstring = topText.contents[0].strip().replace(',','').replace('K','000').replace('M','000000')
+		num = re.findall("\d+",strippedstring)
+		if (num and num[0]):
+			print(type, num[0])
 
 		# types = ['type=Code']
 
