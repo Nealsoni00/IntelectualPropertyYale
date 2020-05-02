@@ -60,7 +60,16 @@ def processPage(type, soup):
 		if (num and num[0]):
 			print(type, num[0])
 
-		# types = ['type=Code']
+	# get languages
+
+	listCotainer = pjax_container.find("ul", attrs={"class": "filter-list"})
+	listOfCodes = listCotainer.findAll("li")
+	for codeType in listOfCodes:
+		container = codeType.find('a', {"class": "filter-item"})
+		count = container.find('span', {"class": "count"})
+		print(container.text.strip().split('\n              '))
+
+	# types = ['type=Code']
 
 	# print(nav)
 
@@ -74,7 +83,7 @@ types = ['Repositories',
 		 'Wikis', 
 		 'Users']
 
-searchTerms = ['MIT License', 
+codeLicenses = ['MIT License', 
 			   'Apache License', 
 			   'GPLv3', 
 			   'BSD 2-clause',
@@ -84,10 +93,16 @@ searchTerms = ['MIT License',
 			   'LGPLv2.1',
 			   'LGPLv3', 
 			   'Mozilla Public License',
-			   'The Unilicense']
+			   'The Unilicense',
+			   'Boost Software License',
+			   'Pre-Release Software']
 
-for type in types:
+nonCodeLicenses = ['CC0-1.0', 'CC-BY-4', 'CC-BY-SA-4']
 
-	data = requestPage(type, 'MIT License')
-	processPage(type, data)
+copyright = ['copyright']
+
+for codeLicense in codeLicenses:
+	for type in types:
+		data = requestPage(type, codeLicense)
+		processPage(type, data)
 
