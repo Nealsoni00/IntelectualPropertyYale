@@ -5,9 +5,12 @@ import csv
 import time
 
 
-def requestPage():
-	url = "https://github.com/search?q=MIT+License&type=Code"
-	querystring = {}
+def requestPage(type, search):
+	url = "https://github.com/search"
+	querystring = {
+		'q': search,
+		'type': type
+	}
 	payload = {}
 	headers = {
 		'Cookie': cookie,
@@ -22,7 +25,7 @@ def requestPage():
 	soup = BeautifulSoup(html_content, "lxml")
 	return soup
 
-def processPage(soup):
+def processPage(type, soup):
 	# print(soup.prettify())
 	body = soup.body
 	# print(body.prettify())
@@ -33,31 +36,32 @@ def processPage(soup):
 	nav = pjax_container.find("nav")
 	menuOptions = nav.findAll("a", attrs={"class": "menu-item"})
 	# print(menuOptions)
-	types = ['type=Repositories', 
-			 'type=Code', 
-			 'type=Commits', 
-			 'type=Issues',
-			 'type=RegistryPackages', 
-			 'type=Marketplace', 
-			 'type=Topics', 
-			 'type=Wikis', 
-			 'type=Users']
+	
 
 	for option in menuOptions:
-		for type in types: 
-			if type in option['href']:
-				if option.find("span"):
-					size = option.find("span").contents
-					print(type, size)
+		# for type in types: 
+		if "type="+type in option['href']:
+			if option.find("span"):
+				size = option.find("span").contents[0]
+				print(type, size)
+
 
 		# types = ['type=Code']
 
 	# print(nav)
 
+types = ['Repositories', 
+		 'Code', 
+		 'Commits', 
+		 'Issues',
+		 'RegistryPackages', 
+		 'Marketplace', 
+		 'Topics', 
+		 'Wikis', 
+		 'Users']
 
+for type in types:
 
-
-data = requestPage()
-
-processPage(data)
+	data = requestPage(type, 'MIT+License')
+	processPage(type, data)
 
