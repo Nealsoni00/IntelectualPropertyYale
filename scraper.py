@@ -4,6 +4,7 @@ from bs4 import BeautifulSoup, NavigableString, Tag
 import csv
 import time
 import re
+import numpy as np
 
 def requestPage(type, search):
 	url = "https://github.com/search"
@@ -124,5 +125,7 @@ for codeLicense in allLicenses:
 		licenseData[type] = processPage(type, data)
 	scrapedData[codeLicense] = licenseData
 	print(scrapedData)
+	np.save('data.npy', scrapedData) 
+	time.sleep(30)
 
 print(scrapedData)
