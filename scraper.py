@@ -112,9 +112,11 @@ codeLicenses = ['MIT License',
 
 nonCodeLicenses = ['CC0-1.0', 'CC-BY-4', 'CC-BY-SA-4']
 
-copyright = ['copyright']
+copyright = ['retain the above copyright', 'without modification', 'with or without modification', 'without warranty', 'reproduce and distribute copies']
 
-allLicenses = sum([codeLicenses,nonCodeLicenses,copyright],[])
+confidential = ['Proprietary and confidential', 'All rights reserved', 'Unauthorized copying strictly prohibited']
+
+allLicenses = sum([confidential],[])
 print(allLicenses)
 scrapedData = {}
 
