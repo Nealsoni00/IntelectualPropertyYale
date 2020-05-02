@@ -33,6 +33,9 @@ def processPage(type, soup):
 	# print(maincontent)
 	pjax_container = body.find("main", {"id":"js-pjax-container"})
 	
+	if pjax_container == None:
+		return {'type': type, 'count': 0, 'codeDist': {}}
+
 	nav = pjax_container.find("nav")
 	menuOptions = nav.findAll("a", attrs={"class": "menu-item"})
 	# print(menuOptions)
@@ -42,35 +45,44 @@ def processPage(type, soup):
 		if "type="+type in option['href']:
 			if option.find("span"):
 				size = option.find("span").contents[0]
-				print(type, size.replace(',','').replace('K','000').replace('M','000000'))
+				# print(type, size.replace(',','').replace('K','000').replace('M','000000'))
 
 	rightSide = pjax_container.find("div", {"class": "codesearch-results"})
 
+	exactNum = 0
+	
 	topText = rightSide.find("span", {"class":"v-align-middle"})
 	if topText and topText.contents:
 		strippedstring = topText.contents[0].strip().replace(',','').replace('K','000').replace('M','000000')
 		num = re.findall("\d+",strippedstring)
 		if (num and num[0]):
-			print(type, num[0])
+			exactNum =  num[0]
 
 	topText = rightSide.find("h3")
+
 	if topText and topText.contents:
 		strippedstring = topText.contents[0].strip().replace(',','').replace('K','000').replace('M','000000')
 		num = re.findall("\d+",strippedstring)
 		if (num and num[0]):
-			print(type, num[0])
+			exactNum =  num[0]
 
 	# get languages
-
+	codeDist = {}
 	listCotainer = pjax_container.find("ul", attrs={"class": "filter-list"})
-	listOfCodes = listCotainer.findAll("li")
-	for codeType in listOfCodes:
-		container = codeType.find('a', {"class": "filter-item"})
-		count = container.find('span', {"class": "count"})
-		print(container.text.strip().split('\n              '))
+	if listCotainer:
+		listOfCodes = listCotainer.findAll("li")
+		
+		for codeType in listOfCodes:
+			container = codeType.find('a', {"class": "filter-item"})
+			count = container.find('span', {"class": "count"})
+			code = container.text.strip().split('\n              ')
+			if len(code) >= 2:
+				codeDist[code[1]] = code[0]
+	return {'type': type, 'count': exactNum, 'codeDist': codeDist}
+
+
 
 	# types = ['type=Code']
-
 	# print(nav)
 
 types = ['Repositories', 
@@ -101,8 +113,16 @@ nonCodeLicenses = ['CC0-1.0', 'CC-BY-4', 'CC-BY-SA-4']
 
 copyright = ['copyright']
 
-for codeLicense in codeLicenses:
+allLicenses = sum([codeLicenses,nonCodeLicenses,copyright],[])
+print(allLicenses)
+scrapedData = {}
+
+for codeLicense in allLicenses:
+	licenseData = {}
 	for type in types:
 		data = requestPage(type, codeLicense)
-		processPage(type, data)
+		licenseData[type] = processPage(type, data)
+	scrapedData[codeLicense] = licenseData
+	print(scrapedData)
 
+print(scrapedData)
