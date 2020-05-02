@@ -37,7 +37,6 @@ def processPage(type, soup):
 	menuOptions = nav.findAll("a", attrs={"class": "menu-item"})
 	# print(menuOptions)
 	
-
 	for option in menuOptions:
 		# for type in types: 
 		if "type="+type in option['href']:
@@ -75,8 +74,20 @@ types = ['Repositories',
 		 'Wikis', 
 		 'Users']
 
+searchTerms = ['MIT License', 
+			   'Apache License', 
+			   'GPLv3', 
+			   'BSD 2-clause',
+			   'BSD 3-clause',
+			   'GPLv2', 
+			   'GPLv2.1',
+			   'LGPLv2.1',
+			   'LGPLv3', 
+			   'Mozilla Public License',
+			   'The Unilicense']
+
 for type in types:
 
-	data = requestPage(type, 'MIT+License')
+	data = requestPage(type, 'MIT License')
 	processPage(type, data)
 
