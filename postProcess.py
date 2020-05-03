@@ -201,7 +201,7 @@ df.to_csv("LicensesData.csv", index=False)
 
 openSourceTermsCount = 0
 openSourceLicenses = sum([codeLicenses, nonCodeLicenses],[])
-for codeLicense in allLicenses:
+for codeLicense in openSourceLicenses:
 	openSourceTermsCount += int(data[codeLicense]['Code']['count'])
 closedSourceTermsCount = 0
 for codeLicense in confidential:
@@ -216,7 +216,7 @@ createPieGraph(name='Open vs Closed Code File Licenses',
 
 openSourceTermsCount = 0
 openSourceLicenses = sum([codeLicenses, nonCodeLicenses],[])
-for codeLicense in allLicenses:
+for codeLicense in openSourceLicenses:
 	openSourceTermsCount += int(data[codeLicense]['Repositories']['count'])
 closedSourceTermsCount = 0
 for codeLicense in confidential:
@@ -226,6 +226,13 @@ createPieGraph(name='Open vs Closed Repository Licenses',
 				labels=['Open Source', 'Closed Source'],
 				sizes=[openSourceTermsCount, closedSourceTermsCount],
 				title='Open vs Closed Repository Licenses')
+
+createPieGraph(name='With vs Without Modification Allowed', 
+				labels=['Allow Modification', "Don't Allow Modification"],
+				sizes=[62574024, 32289895],
+				title='With vs Without Modification Allowed')
+
+
 
 # # data to plot
 # n_groups = len(codeLicenses)
