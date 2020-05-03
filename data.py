@@ -923,7 +923,7 @@ data = {
          }
       }
    },
-   "Boost Software License":{
+   "Boost Software":{
       "Repositories":{
          "type":"Repositories",
          "count":"6",
@@ -998,7 +998,7 @@ data = {
          }
       }
    },
-   "Pre-Release Software":{
+   "Pre-Release":{
       "Repositories":{
          "type":"Repositories",
          "count":"25",
