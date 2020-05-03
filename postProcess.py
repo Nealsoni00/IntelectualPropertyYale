@@ -19,13 +19,14 @@ codeLicenses = ['MIT License',
 
 nonCodeLicenses = ['CC0-1.0', 'CC-BY-4', 'CC-BY-SA-4']
 
-copyright = ['copyright', 'retain the above copyright', 'without modification', 'with or without modification', 'without warranty', 'reproduce and distribute copies']
+termCopyright = 'copyright'
+generalLicenseTerms = ['retain the above copyright', 'without modification', 'with or without modification', 'without warranty', 'reproduce and distribute copies']
 
 confidential = ['Proprietary and confidential', 'All rights reserved', 'Unauthorized copying strictly prohibited']
 
 
 
-def createHorizontalDoubleBarGraph(name, x, y1, y2, y1_axis, y2_axis, title):
+def createHorizontalDoubleBarGraph(name, x, y1, y2, y1_axis, y2_axis, title, angle=90):
 	N = len(x)
 	ind = np.arange(N) 
 	width = 0.3
@@ -43,7 +44,7 @@ def createHorizontalDoubleBarGraph(name, x, y1, y2, y1_axis, y2_axis, title):
 
 	ax.set_xticks(ind + width / 2, x)
 	ax.set_xticks(np.arange(len(x)))
-	ax.set_xticklabels(x, rotation=90)
+	ax.set_xticklabels(x, rotation=angle)
 
 	# twin object for two different y-axis on the sample plot
 	ax2 = ax.twinx()
@@ -60,8 +61,37 @@ def createHorizontalDoubleBarGraph(name, x, y1, y2, y1_axis, y2_axis, title):
 	# save the plot as a file
 	fig.savefig(name + '.jpg',
 	            format='jpeg',
-	            dpi=100,
+	            dpi=200,
 	            bbox_inches='tight')
+
+
+def createPieGraph(name, labels, sizes, title):
+	# labels = ['Cookies', 'Jellybean', 'Milkshake', 'Cheesecake']
+	# sizes = [38.4, 40.6, 20.7, 10.3]
+	# colors = ['yellowgreen', 'gold', 'lightskyblue', 'lightcoral']
+	sizes, labels = zip(*sorted(zip(sizes, labels)))
+
+	fig, ax = plt.subplots()
+	ax.pie(sizes, labels=labels, autopct='%1.f%%',
+	        shadow=True, startangle=90)
+	# Equal aspect ratio ensures that pie is drawn as a circle
+	ax.axis('equal')  
+	plt.tight_layout()
+	# plt.show()
+	ax.set_title(title)
+
+	fig.savefig(name + '.jpg',
+	            format='jpeg',
+	            dpi=200,
+	            bbox_inches='tight')
+
+
+	# patches, texts = plt.pie(sizes, shadow=True, startangle=90)
+	# plt.legend(patches, labels, loc="best")
+	# plt.axis('equal')
+	# plt.tight_layout()
+	# plt.show()
+
 
 repositories = []
 for codeLicense in codeLicenses:
@@ -71,12 +101,18 @@ code = []
 for codeLicense in codeLicenses:
 	code.append(int(data[codeLicense]['Code']['count']))
 
+
+createPieGraph(name='Code of Open Source Licenses', 
+				labels=codeLicenses,
+				sizes=code,
+				title='Code of Open Source Licenses')
+
 createHorizontalDoubleBarGraph( name='(Repositories & Code) vs Open Source Code Licenses', 
 								x=codeLicenses, 
-								y1=repositories, 
-								y2=code, 
-								y1_axis="Repositories Count", 
-								y2_axis="Code Count", 
+								y2=repositories, 
+								y1=code, 
+								y2_axis="Repositories Count", 
+								y1_axis="Code Count", 
 								title='(Repositories & Code) vs Open Source Code Licenses')
 
 repositories = []
@@ -89,14 +125,107 @@ for codeLicense in nonCodeLicenses:
 
 createHorizontalDoubleBarGraph( name='(Repositories & Code) vs General Open Source Licenses', 
 								x=nonCodeLicenses, 
-								y1=repositories, 
-								y2=code, 
-								y1_axis="Repositories Count", 
-								y2_axis="Code Count", 
+								y2=repositories, 
+								y1=code, 
+								y2_axis="Repositories Count", 
+								y1_axis="Code Count", 
 								title='(Repositories & Code) vs General Open Source Licenses')
 
+createPieGraph(name='Code of General Open Source Licenses', 
+				labels=nonCodeLicenses,
+				sizes=code,
+				title='Code of General Open Source Licenses')
 
 
+repositories = []
+for codeLicense in generalLicenseTerms:
+	repositories.append(int(data[codeLicense]['Repositories']['count']))
+
+code = []
+for codeLicense in generalLicenseTerms:
+	code.append(int(data[codeLicense]['Code']['count']))
+
+
+createHorizontalDoubleBarGraph( name='(Repositories & Code) vs General Restriction Terms', 
+								x=generalLicenseTerms, 
+								y2=repositories, 
+								y1=code, 
+								y2_axis="Repositories Count", 
+								y1_axis="Code Count", 
+								title='(Repositories & Code) vs General Restriction Terms',
+								angle = 45)
+
+
+repositories = []
+for codeLicense in confidential:
+	repositories.append(int(data[codeLicense]['Repositories']['count']))
+
+code = []
+for codeLicense in confidential:
+	code.append(int(data[codeLicense]['Code']['count']))
+
+
+createHorizontalDoubleBarGraph( name='(Repositories & Code) vs Confidential Terms', 
+								x=confidential, 
+								y2=repositories, 
+								y1=code, 
+								y2_axis="Repositories Count", 
+								y1_axis="Code Count", 
+								title='(Repositories & Code) vs Confidential Terms',
+								angle = 45)
+
+
+
+allLicenses = sum([codeLicenses, nonCodeLicenses, generalLicenseTerms, confidential],[])
+repositories = []
+for codeLicense in allLicenses:
+	repositories.append(int(data[codeLicense]['Repositories']['count']))
+
+code = []
+for codeLicense in allLicenses:
+	code.append(int(data[codeLicense]['Code']['count']))
+
+createHorizontalDoubleBarGraph( name='(Repositories & Code) vs All Terms', 
+								x=allLicenses, 
+								y2=repositories, 
+								y1=code, 
+								y2_axis="Repositories Count", 
+								y1_axis="Code Count", 
+								title='(Repositories & Code) vs All Terms',
+								angle = 85)
+
+
+df = pd.DataFrame({"Type": allLicenses, "Code" : code, "Repositories" : repositories})
+df.to_csv("LicensesData.csv", index=False)
+
+
+openSourceTermsCount = 0
+openSourceLicenses = sum([codeLicenses, nonCodeLicenses],[])
+for codeLicense in allLicenses:
+	openSourceTermsCount += int(data[codeLicense]['Code']['count'])
+closedSourceTermsCount = 0
+for codeLicense in confidential:
+	closedSourceTermsCount += int(data[codeLicense]['Code']['count'])
+
+
+createPieGraph(name='Open vs Closed Code File Licenses', 
+				labels=['Open Source', 'Closed Source'],
+				sizes=[openSourceTermsCount, closedSourceTermsCount],
+				title='Open vs Closed Code File Licenses')
+
+
+openSourceTermsCount = 0
+openSourceLicenses = sum([codeLicenses, nonCodeLicenses],[])
+for codeLicense in allLicenses:
+	openSourceTermsCount += int(data[codeLicense]['Repositories']['count'])
+closedSourceTermsCount = 0
+for codeLicense in confidential:
+	closedSourceTermsCount += int(data[codeLicense]['Repositories']['count'])
+
+createPieGraph(name='Open vs Closed Repository Licenses', 
+				labels=['Open Source', 'Closed Source'],
+				sizes=[openSourceTermsCount, closedSourceTermsCount],
+				title='Open vs Closed Repository Licenses')
 
 # # data to plot
 # n_groups = len(codeLicenses)

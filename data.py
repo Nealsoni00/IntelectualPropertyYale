@@ -2232,5 +2232,246 @@ data = {
 
          }
       }
+   },
+   "Proprietary and confidential":{
+      "Repositories":{
+         "type":"Repositories",
+         "count":"4",
+         "codeDist":{
+            "JavaScript":"1",
+            "Shell":"1"
+         }
+      },
+      "Code":{
+         "type":"Code",
+         "count":"14440999",
+         "codeDist":{
+            "Java":"7,934,831",
+            "C":"1,847,657",
+            "C++":"896,440",
+            "XML":"593,366",
+            "C#":"468,446",
+            "VHDL":"362,177",
+            "Verilog":"337,984",
+            "HTML":"213,121",
+            "Text":"203,599",
+            "JavaScript":"152,794"
+         }
+      },
+      "Commits":{
+         "type":"Commits",
+         "count":"1404",
+         "codeDist":{
+
+         }
+      },
+      "Issues":{
+         "type":"Issues",
+         "count":"2831",
+         "codeDist":{
+
+         }
+      },
+      "RegistryPackages":{
+         "type":"RegistryPackages",
+         "count":0,
+         "codeDist":{
+
+         }
+      },
+      "Marketplace":{
+         "type":"Marketplace",
+         "count":"000000",
+         "codeDist":{
+
+         }
+      },
+      "Topics":{
+         "type":"Topics",
+         "count":0,
+         "codeDist":{
+
+         }
+      },
+      "Wikis":{
+         "type":"Wikis",
+         "count":"232",
+         "codeDist":{
+
+         }
+      },
+      "Users":{
+         "type":"Users",
+         "count":"1",
+         "codeDist":{
+            "Java":"1"
+         }
+      }
+   },
+   "All rights reserved":{
+      "Repositories":{
+         "type":"Repositories",
+         "count":"783",
+         "codeDist":{
+            "Java":"76",
+            "HTML":"70",
+            "JavaScript":"61",
+            "CSS":"38",
+            "Python":"36",
+            "C#":"34",
+            "C++":"24",
+            "Jupyter Notebook":"23",
+            "PHP":"22",
+            "C":"13"
+         }
+      },
+      "Code":{
+         "type":"Code",
+         "count":"166224689",
+         "codeDist":{
+            "C":"58,020,467",
+            "C++":"18,513,555",
+            "PHP":"14,381,601",
+            "HTML":"12,364,915",
+            "JavaScript":"12,026,650",
+            "Java":"11,352,108",
+            "Objective-C":"5,629,757",
+            "Python":"5,431,780",
+            "XML":"3,113,297",
+            "C#":"2,489,948"
+         }
+      },
+      "Commits":{
+         "type":"Commits",
+         "count":"71369",
+         "codeDist":{
+
+         }
+      },
+      "Issues":{
+         "type":"Issues",
+         "count":"55116",
+         "codeDist":{
+
+         }
+      },
+      "RegistryPackages":{
+         "type":"RegistryPackages",
+         "count":"11",
+         "codeDist":{
+            "Npm":"11"
+         }
+      },
+      "Marketplace":{
+         "type":"Marketplace",
+         "count":"000000",
+         "codeDist":{
+
+         }
+      },
+      "Topics":{
+         "type":"Topics",
+         "count":0,
+         "codeDist":{
+
+         }
+      },
+      "Wikis":{
+         "type":"Wikis",
+         "count":"6678",
+         "codeDist":{
+
+         }
+      },
+      "Users":{
+         "type":"Users",
+         "count":"59",
+         "codeDist":{
+            "HTML":"7",
+            "Java":"4",
+            "JavaScript":"4",
+            "C#":"3",
+            "Python":"3",
+            "C++":"2",
+            "CSS":"2",
+            "PHP":"2",
+            "Go":"1",
+            "Makefile":"1"
+         }
+      }
+   },
+   "Unauthorized copying strictly prohibited":{
+      "Repositories":{
+         "type":"Repositories",
+         "count":"2",
+         "codeDist":{
+            "MATLAB":"1"
+         }
+      },
+      "Code":{
+         "type":"Code",
+         "count":"170198",
+         "codeDist":{
+            "C":"44,963",
+            "Text":"23,684",
+            "Java":"22,699",
+            "C++":"10,559",
+            "XML":"9,236",
+            "C#":"4,961",
+            "JavaScript":"4,879",
+            "PHP":"4,075",
+            "HTML":"3,845",
+            "Objective-C":"2,573"
+         }
+      },
+      "Commits":{
+         "type":"Commits",
+         "count":"27",
+         "codeDist":{
+
+         }
+      },
+      "Issues":{
+         "type":"Issues",
+         "count":"737",
+         "codeDist":{
+
+         }
+      },
+      "RegistryPackages":{
+         "type":"RegistryPackages",
+         "count":0,
+         "codeDist":{
+
+         }
+      },
+      "Marketplace":{
+         "type":"Marketplace",
+         "count":"000000",
+         "codeDist":{
+
+         }
+      },
+      "Topics":{
+         "type":"Topics",
+         "count":0,
+         "codeDist":{
+
+         }
+      },
+      "Wikis":{
+         "type":"Wikis",
+         "count":"9",
+         "codeDist":{
+
+         }
+      },
+      "Users":{
+         "type":"Users",
+         "count":0,
+         "codeDist":{
+
+         }
+      }
    }
 }
